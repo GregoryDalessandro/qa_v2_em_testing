@@ -64,4 +64,12 @@ describe("employee manager v2", () => {
     //   "title": "Screenshot"
     // }
   });
+    test("Searching for employees with the title 'Screenshot' saves a screenshot of them to the screenshots folder", async () => {
+      // iterate through the list of employees in Employee Manager app
+        // if the currently selected employee's title is Screenshot..
+          // take a screnshot and save it into the screenshots folder
+          // use current date as the file name
+        // store the name into a variable inside this test
+        // verify that the screenshot's name exists in the screenshots folder by comparing the variable with the screenshot's name
+  });
 });
