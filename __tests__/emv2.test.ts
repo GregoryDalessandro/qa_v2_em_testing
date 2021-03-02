@@ -1,31 +1,5 @@
 import { EmployeeManager, Employee } from "./pageObjects/EmployeeManager";
-
-const employees: Array<Employee> = [
-  {
-    name: "Han Solo",
-    phone: 1111111111,
-    email: "millenium@falcon.rep",
-    title: "Smuggler",
-  },
-  {
-    name: "Luke Skywalker",
-    phone: 2222222222,
-    email: "red5@rogue.rep",
-    title: "Jedi",
-  },
-  {
-    name: "Thrawn",
-    phone: 3333333333,
-    email: "gathrawn@admiralty.emp",
-    title: "Best Villain",
-  },
-  {
-    name: "R2-D2",
-    phone: 4444444444,
-    email: "pottymouth@astromech.rep",
-    title: "Crotchety Old Droid",
-  },
-];
+import * as employees from "../employees.json";
 
 describe("employee manager v2", () => {
   const page = new EmployeeManager({ browser: "chrome" });
@@ -57,5 +31,37 @@ describe("employee manager v2", () => {
     await page.deleteEmployee("Test Employee");
     let employeeList = await page.getEmployeeList();
     expect(employeeList).not.toContain("Test Employee");
+  });
+  //I want to iterate through the json file and add the employees if they don't already exist in the app's database
+  test("Can iterate through employees.json and add any employee that doesn't exist in the react app's employee list", async() => {
+    // for each employee in from the employees.json file
+    // if the name does not exist in the react app's employee list..\
+      // if New Employee exists..
+        // select New Employee
+        // select Name input field
+          // clear text
+          // sendkeys of current employee's name
+        // select Phone Number input field
+          // clear text
+          // sendkeys of current employee's phone number
+        // select email Address input field
+          // clear text
+          //send keys of current employee's email address
+        // select Title
+          // clear text
+        // send keys of current employee's title
+        // select the save button (click)
+      // else select add employee
+        // repeat steps from lines 40-52 (adding of information)
+        // select the save button (click)
+
+
+    //TODO: delete this object - it is just an example for me to use to add an employee
+    //{
+    //   "name": "Obi-Wan kenobi",
+    //   "phone": 555555555,
+    //   "email": "totallynotbenkenobbi.rep",
+    //   "title": "Screenshot"
+    // }
   });
 });
