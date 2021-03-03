@@ -4,6 +4,7 @@ import { findSafariDriver } from "selenium-webdriver/safari";
 
 describe("employee manager v2", () => {
   const page = new EmployeeManager({ browser: "chrome" });
+  let employeesFromJson = employees.employeeInfo;
   beforeEach(async () => {
     await page.navigate();
   });
@@ -32,6 +33,20 @@ describe("employee manager v2", () => {
     await page.deleteEmployee("Test Employee");
     let employeeList = await page.getEmployeeList();
     expect(employeeList).not.toContain("Test Employee");
+  });
+
+  employeesFromJson.forEach((newEmployee) => {
+    test(`Can add and delete a new employee named ${newEmployee.name} from employees.json`, async () => {
+      await page.addEmployee(newEmployee);
+      let employee = await page.getCurrentEmployee();
+      expect(employee.name).toEqual(newEmployee.name);
+      expect(employee.phone).toEqual(newEmployee.phone);
+      expect(employee.email).toEqual(newEmployee.email);
+      expect(employee.title).toEqual(newEmployee.title);
+      await page.deleteEmployee(newEmployee.name);
+      let employeeList = await page.getEmployeeList();
+      expect(employeeList).not.toContain(employee.name);
+    });
   });
   //TODO: I want to iterate through the json file and add the employees if they don't already exist in the app's database
   // test("Can iterate through employees.json and add any employee that doesn't exist in the react app's employee list", async() => {
