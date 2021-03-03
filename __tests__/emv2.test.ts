@@ -1,5 +1,6 @@
 import { EmployeeManager, Employee } from "./pageObjects/EmployeeManager";
 import * as employees from "../employees.json";
+import { findSafariDriver } from "selenium-webdriver/safari";
 
 describe("employee manager v2", () => {
   const page = new EmployeeManager({ browser: "chrome" });
@@ -32,10 +33,37 @@ describe("employee manager v2", () => {
     let employeeList = await page.getEmployeeList();
     expect(employeeList).not.toContain("Test Employee");
   });
-  //I want to iterate through the json file and add the employees if they don't already exist in the app's database
-  test("Can iterate through employees.json and add any employee that doesn't exist in the react app's employee list", async() => {
-    // for each employee in from the employees.json file
-    // if the name does not exist in the react app's employee list..\
+  //TODO: I want to iterate through the json file and add the employees if they don't already exist in the app's database
+  // test("Can iterate through employees.json and add any employee that doesn't exist in the react app's employee list", async() => {
+  //   let asyncForEach = async (array, cb) => {
+  //     for (let i = 0; i <  array.length; i++) {
+  //       await cb(array[i], i, array);
+  //     }
+  //   }
+  //   let employeesFromJson: Array<object> = employees.employeeInfo;
+  //   let employeesFromApp: Array<any>;
+  //   //let employeesFromApp = await page.getEmployeeList();
+  //   await page.searchFor("Luke Skywalker");
+  //   employeesFromApp = await page.getEmployeeList();
+  //   await console.log("employeesFromApp:",employeesFromApp);
+  //   // for each employee in from the employees.json file
+  //   // asyncForEach(employeesFromApp, page.searchFor(`${e}`))
+  //   // })
+  //   await asyncForEach(employeesFromJson, (employee)=> {
+  //   //search for current employee in employesFromJSon array
+  //     page.searchFor(employee.name)
+  //     employeesFromApp =  page.getEmployeeList();
+  //     if (employeesFromApp.length === 0) {
+  //       console.log(`${employee.name}`);
+  //     }
+  //   })
+  //   })
+    //await employeesFromJson.forEach(employee => {
+      // if the name does not exist in the react app's employee list..\
+      //page.searchFor(employee.name)
+      // console.log("if 0 this means employee doesn't exist:", await page.getEmployeeList())
+    //});
+
       // if New Employee exists..
         // select New Employee
         // select Name input field
@@ -57,19 +85,24 @@ describe("employee manager v2", () => {
 
 
     //TODO: delete this object - it is just an example for me to use to add an employee
-    //{
+    // {
     //   "name": "Obi-Wan kenobi",
     //   "phone": 555555555,
     //   "email": "totallynotbenkenobbi.rep",
     //   "title": "Screenshot"
     // }
-  });
+
+
+
     test("Searching for employees with the title 'Screenshot' saves a screenshot of them to the screenshots folder", async () => {
-      // iterate through the list of employees in Employee Manager app
-        // if the currently selected employee's title is Screenshot..
-          // take a screnshot and save it into the screenshots folder
-          // use current date as the file name
-        // store the name into a variable inside this test
+      let screenShotName: string = `${Date.now()}`;
+      let screenShotFilePath: string = `./screenshots/${screenShotName}`;
+      //get list of employees with the title "Screenshot"
+      await page.searchFor("Screenshot");
+      // take a screenshot using current date as the file name
+      // store the name into a variable inside this test
+      page.takeScreenshot(`./screenshots/${screenShotName}`);
         // verify that the screenshot's name exists in the screenshots folder by comparing the variable with the screenshot's name
+        expect(screenShotFilePath).toBeTruthy();
   });
 });
